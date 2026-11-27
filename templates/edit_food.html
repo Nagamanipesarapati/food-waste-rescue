@@ -1,0 +1,67 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Edit Donation - Food Waste Rescue</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <div class="form-container">
+
+        <h1>Edit Food Donation</h1>
+
+        <p>Update your food donation details below.</p>
+
+        <form method="POST">
+
+            <label>Food Name</label>
+            <input
+                type="text"
+                name="food_name"
+                value="{{ food[1] }}"
+                required
+            >
+
+            <label>Quantity</label>
+            <input
+                type="number"
+                name="quantity"
+                value="{{ food[2] }}"
+                min="1"
+                required
+            >
+
+            <label>Location</label>
+            <input
+                type="text"
+                name="location"
+                value="{{ food[3] }}"
+                required
+            >
+
+            <label>Available Until</label>
+            <input
+                type="datetime-local"
+                name="expiry_time"
+                value="{{ food[4] | replace(' ', 'T') }}"
+                required
+            >
+
+            <button type="submit">Update Donation</button>
+
+        </form>
+
+        <a href="{{ url_for('dashboard') }}">Back to Dashboard</a>
+
+    </div>
+
+</body>
+</html>

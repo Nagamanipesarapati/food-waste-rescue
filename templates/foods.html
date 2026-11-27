@@ -1,0 +1,91 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Available Food - Food Waste Rescue</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <nav class="navbar">
+
+        <h2>Food Waste Rescue</h2>
+
+        <div>
+            <a href="{{ url_for('home') }}">Home</a>
+            <a href="{{ url_for('login') }}">Login</a>
+            <a href="{{ url_for('register') }}">Register</a>
+        </div>
+
+    </nav>
+
+    <section class="features">
+
+        <h1>Available Food Donations</h1>
+
+        <p>Find surplus food available in Hyderabad.</p>
+
+        <form action="{{ url_for('search') }}" method="GET">
+
+            <input
+                type="text"
+                name="area"
+                placeholder="Search by Hyderabad area"
+                required
+            >
+
+            <button type="submit">Search</button>
+
+        </form>
+
+        <div class="food-container">
+
+            {% if food_listings %}
+
+                {% for food in food_listings %}
+
+                    <div class="food-card">
+
+                        <h3>{{ food[1] }}</h3>
+
+                        <p><strong>Quantity:</strong> {{ food[2] }}</p>
+
+                        <p><strong>Location:</strong> {{ food[3] }}</p>
+
+                        <p><strong>Available Until:</strong> {{ food[4] }}</p>
+
+                    </div>
+
+                {% endfor %}
+
+            {% else %}
+
+                <div class="food-card">
+
+                    <h3>No Food Donations Found</h3>
+
+                    <p>Try searching another Hyderabad area.</p>
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
+        <a href="{{ url_for('home') }}">Back to Home</a>
+
+    </section>
+
+    <footer>
+        <p>© 2026 Food Waste Rescue | Hyderabad, India</p>
+    </footer>
+
+</body>
+</html>

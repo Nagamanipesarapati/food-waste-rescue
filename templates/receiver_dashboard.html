@@ -1,0 +1,137 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>NGO Dashboard - Food Waste Rescue</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <h2>Food Waste Rescue</h2>
+        <div>
+            <a href="{{ url_for('home') }}">Home</a>
+            <a href="{{ url_for('logout') }}">Logout</a>
+        </div>
+    </nav>
+
+    <h1>Welcome, {{ session['user_name'] }}!</h1>
+
+    <section class="features">
+
+        <h2>Available Food Donations</h2>
+
+        <form method="GET" action="{{ url_for('search') }}">
+            <input
+                type="text"
+                name="area"
+                placeholder="Search by Hyderabad area"
+                required
+            >
+            <button type="submit">Search</button>
+        </form>
+
+        <div class="food-container">
+
+            {% if food_listings %}
+
+                {% for food in food_listings %}
+
+                    <div class="food-card">
+
+                        <h3>{{ food[1] }}</h3>
+
+                        <p><strong>Quantity:</strong> {{ food[2] }}</p>
+
+                        <p><strong>Location:</strong> {{ food[3] }}</p>
+
+                        <p><strong>Available Until:</strong> {{ food[4] }}</p>
+
+                        <form
+                            action="{{ url_for('request_food', listing_id=food[0]) }}"
+                            method="POST">
+
+                            <button type="submit">Request Food</button>
+
+                        </form>
+
+                    </div>
+
+                {% endfor %}
+
+            {% else %}
+
+                <p>No food donations are currently available.</p>
+
+            {% endif %}
+
+        </div>
+
+    </section>
+
+    <hr>
+
+    <section class="features">
+
+        <h2>My Food Requests</h2>
+
+        <div class="food-container">
+
+            {% if receiver_requests %}
+
+                {% for req in receiver_requests %}
+
+                    <div class="food-card">
+
+                        <h3>{{ req[1] }}</h3>
+
+                        <p><strong>Quantity:</strong> {{ req[2] }}</p>
+
+                        <p><strong>Location:</strong> {{ req[3] }}</p>
+
+                        <p><strong>Donated By:</strong> {{ req[4] }}</p>
+
+                        <p><strong>Status:</strong> {{ req[5] }}</p>
+
+                        <p><strong>Request Date:</strong> {{ req[6] }}</p>
+
+                        {% if req[5] == 'Accepted' %}
+
+                            <form method="POST"
+                                  action="{{ url_for('complete_request', request_id=req[0]) }}">
+
+                                <button type="submit">
+                                    Mark as Collected
+                                </button>
+
+                            </form>
+
+                        {% endif %}
+
+                    </div>
+
+                {% endfor %}
+
+            {% else %}
+
+                <p>You haven't requested any food yet.</p>
+
+            {% endif %}
+
+        </div>
+
+    </section>
+
+    <footer>
+        <p>© 2026 Food Waste Rescue | Hyderabad, India</p>
+    </footer>
+
+</body>
+</html>

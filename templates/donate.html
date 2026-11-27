@@ -1,0 +1,58 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Donate Food - Food Waste Rescue</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <div class="form-container">
+
+        <h1>Donate Surplus Food</h1>
+
+        <p>Help us reduce food waste and feed people in need.</p>
+
+        <form action="{{ url_for('donate') }}" method="POST">
+
+            <label>Food Name</label>
+            <input type="text"
+                   name="food_name"
+                   placeholder="Example: Vegetable Rice"
+                   required>
+
+            <label>Quantity</label>
+            <input type="number"
+                   name="quantity"
+                   placeholder="Enter quantity"
+                   min="1"
+                   required>
+
+            <label>Hyderabad Location</label>
+            <input type="text"
+                   name="location"
+                   placeholder="Example: Kukatpally"
+                   required>
+
+            <label>Available Until</label>
+            <input type="datetime-local"
+                   name="expiry_time"
+                   required>
+
+            <button type="submit">Submit Donation</button>
+
+        </form>
+
+        <a href="{{ url_for('dashboard') }}">Back to Dashboard</a>
+
+    </div>
+
+</body>
+</html>
