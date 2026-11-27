@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, session, flash
+import  os
 from werkzeug.security import check_password_hash
 from database import (
     add_food_listing,
@@ -23,7 +24,7 @@ delete_user
 )
 from werkzeug.security import check_password_hash
 app = Flask(__name__)
-app.secret_key = "food_waste_rescue_dev_secret"
+app.secret_key = os.environ.get("SECRET_KEY", "local-development-key")
 @app.route("/")
 def home():
     return render_template("index.html")
@@ -337,6 +338,10 @@ def admin_delete_user(user_id):
 def foods():
     food_listings = get_available_food_listings()
     return render_template("foods.html", food_listings=food_listings)
-
 if __name__ == "__main__":
-    app.run(debug=True)
+    import os
+    app.run(
+        host="0.0.0.0",
+        port=int(os.environ.get("PORT", 5000)),
+        debug=False
+    )
